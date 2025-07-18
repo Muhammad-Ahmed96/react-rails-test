@@ -8,6 +8,7 @@ bundle install
 rails db:create
 rails db:migrate
 rails db:seed
+rails s
 ```
 ### Frontend
 Navigate to Frontend folder and Run the following commands to setup frontend
