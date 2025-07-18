@@ -1,15 +1,17 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import Project from "./Project";
-import { getProjects } from "../../utils/api";
+import { getAssignedProjects, getProjects } from "../../utils/api";
 import ProjectsTable from "./ProjectsTable";
+import { AuthContext } from "../../context/authContext";
 
 
 export default function ProjectsList() {
   const [projects, setProjects] = useState([]);
+  const { user } = useContext(AuthContext);
   useEffect(() => {
     async function fetchProjects() {
       try {
-        const projects = await getProjects();
+        const projects = await getAssignedProjects();
         setProjects(projects)
       }catch(error) {
         console.log(error)

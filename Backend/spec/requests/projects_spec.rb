@@ -113,7 +113,7 @@ RSpec.describe 'Projects API', type: :request do
         run_test! do |response|
           expect(response.status).to eq(422)
           data = JSON.parse(response.body)
-          expect(data['msg']).to eq('User already assigned this project')
+          expect(data['error']).to eq('User already assigned this project')
         end
       end
     end
@@ -206,7 +206,7 @@ RSpec.describe 'Projects API', type: :request do
         run_test! do |response|
           expect(response.status).to eq(422)
           data = JSON.parse(response.body)
-          expect(data['msg']).to eq('User already unassigned from this project')
+          expect(data['error']).to eq('User already unassigned from this project')
         end
       end
     end

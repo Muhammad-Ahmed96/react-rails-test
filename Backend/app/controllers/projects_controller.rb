@@ -1,8 +1,12 @@
 
 class ProjectsController < ApplicationController
-  skip_before_action :check_login
-  before_action :find_project
+  before_action :check_login
+  before_action :find_project, except: [ :index ]
 
+  def index
+    @projects = current_user.projects
+    render json: @projects, each_serializer: ProjectSerializer
+  end
   def show
     render json: @project, serializer: ProjectSerializer
   end

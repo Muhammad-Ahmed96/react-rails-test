@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
-import Project from "./Project";
 import { getProjects } from "../../utils/api";
-import ProjectsTable from "./ProjectsTable";
+import ProjectsTable from "../Project/ProjectsTable";
 
 
 export default function ProjectsList() {

@@ -11,7 +11,7 @@ class Admin::ProjectsController < ApplicationController
 
   def assign
     if @user.projects.include?(@project)
-      render json: { msg: "User already assigned this project" }, status: :unprocessable_entity and return
+      render json: { error: "User already assigned this project" }, status: :unprocessable_entity and return
     end
     @user.projects << @project
     render json: @user, status: :ok
@@ -19,7 +19,7 @@ class Admin::ProjectsController < ApplicationController
 
   def unassign
     unless @user.projects.include?(@project)
-      render json: { msg: "User already unassigned from this project" }, status: :unprocessable_entity and return
+      render json: { error: "User already unassigned from this project" }, status: :unprocessable_entity and return
     end
     @user.projects.delete(@project)
     render json: @user, status: :ok

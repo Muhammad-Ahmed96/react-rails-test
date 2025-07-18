@@ -25,7 +25,11 @@ export default function Login() {
 
       const data = await res.json();
       login(data.user, data.token);
-      navigate('/');
+      if (data.user.role === "admin") {
+        navigate("/admin/projects");
+      } else {
+        navigate("/projects");
+      }
     } catch (err) {
       setError(err.message);
     }

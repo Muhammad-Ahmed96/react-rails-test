@@ -5,7 +5,9 @@ class TasksController < ApplicationController
 
   def add
     begin
+      render json: { error: "Project Not Active Yet, Can't Add Task" }, status: :unprocessable_entity and return unless @project.active?
       task = Task.new(task_params.merge(project_id: @project.id))
+      task.duration = "#{task.duration} #{task.duration_type}".split.then { |dur, unit| dur.to_i.send(unit).to_i }
       if task.save
         render json: task, serializer: TaskSerializer, status: :ok
       else
@@ -43,6 +45,6 @@ class TasksController < ApplicationController
     end
 
     def task_params
-      params.expect(task: [ :name, :description, :start_time, :end_time, :duration ])
+      params.expect(task: [ :name, :description, :start_time, :end_time, :duration, :duration_type ])
     end
 end

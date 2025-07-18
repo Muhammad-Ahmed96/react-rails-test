@@ -40,3 +40,4 @@ user1.projects << proj2
 
 user2.projects << proj2
 user2.projects << proj3
+user1.projects << proj3

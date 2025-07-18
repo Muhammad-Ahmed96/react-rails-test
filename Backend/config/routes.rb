@@ -19,7 +19,7 @@ Rails.application.routes.draw do
     resources :users, only: [ :index ]
   end
 
-  resources :projects, only: [ :show ] do
+  resources :projects, only: [ :index, :show ] do
     post "add-task", to: "tasks#add"
     delete "remove-task/:id", to: "tasks#remove"
   end

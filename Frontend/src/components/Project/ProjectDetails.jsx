@@ -46,7 +46,7 @@ export default function ProjectDetail() {
     })
     const data = await response.json()
     if(!response.ok) {
-      setError(data.msg)
+      setError(data.error)
       return;
     }
     setProjectUsers(oldUsers => {
@@ -67,7 +67,7 @@ export default function ProjectDetail() {
     })
     const data = await response.json()
     if(!response.ok) {
-      setError(data.msg)
+      setError(data.error)
       return;
     }
     setProjectUsers(oldUsers => {

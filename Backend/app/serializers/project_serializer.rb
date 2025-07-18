@@ -16,7 +16,7 @@ class ProjectSerializer < ActiveModel::Serializer
   end
 
   def total_time
-    total_time = object.tasks.sum { |task| (task.end_time - task.start_time).to_i }
+    total_time = object.tasks.sum { |task| task.duration.to_i }
     format_time(total_time)
   end
 

@@ -1,19 +1,29 @@
 import { Route, Routes } from 'react-router-dom'
-import Projects from './components/Project/Projects'
+import ProjectsList from './components/Project/ProjectsList'
+import AdminProjectsList from './components/Admin/ProjectsList'
 import ProjectDetail from './components/Project/ProjectDetails'
 import Login from './components/Auth/Login'
-import PrivateRoutes from './context/PrviateRoutes'
-import Navbar from './components/Shared/Navbar'
+import RolesRoutes from './components/Shared/RolesRoutes'
+import ProjectsRedirect from './components/Shared/ProjectsRedirect'
 
 function App() {
   return (
     <>
     <Routes>
       <Route path="/login" element={<Login />} />
-      <Route element={<PrivateRoutes />}>
-        <Route path="/" element={<Projects />} />
-        <Route path="/projects/:id" element={<ProjectDetail />} />
-      </Route>
+      <Route path="/" element={<ProjectsRedirect />} />
+      <Route path="/admin/projects" element={
+        <RolesRoutes role="admin">
+          <AdminProjectsList />
+        </RolesRoutes>} 
+      />
+      <Route path="/projects" element={
+        <RolesRoutes role="user">
+          <ProjectsList />
+        </RolesRoutes>}
+      />
+      <Route path="/projects/:id" element={<ProjectDetail />} />
+      <Route path="*" element={<h1>Page Not Found!</h1>} />
     </Routes>
     </>
   )

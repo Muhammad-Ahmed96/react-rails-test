@@ -4,7 +4,7 @@ import { useContext } from 'react';
 import { AuthContext } from '../../context/authContext';
 
 function Navbar() {
-  const { token, logout } = useContext(AuthContext);
+  const { token, logout, user } = useContext(AuthContext);
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -15,6 +15,7 @@ function Navbar() {
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light px-4">
       <a className="navbar-brand" href="/">My Projects</a>
+      { user && <span className="navbar-brand" href="/">{user.name}</span> }
       <div className="ms-auto">
         {token && (
           <>

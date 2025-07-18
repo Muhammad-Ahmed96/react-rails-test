@@ -1,13 +1,13 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { AuthContext } from "../../context/authContext";
 import { TaskContext } from "../../context/taskContext";
 import { useParams } from "react-router-dom";
 
 export default function AddTask({ toggleAddTask }) {
-  const { addTask } = useContext(TaskContext);
-
+  const { addTask, fetchProject } = useContext(TaskContext);
   const { id } = useParams();
   const { token } = useContext(AuthContext);
+  const [error, setError] = useState(null);
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -20,15 +20,18 @@ export default function AddTask({ toggleAddTask }) {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
       },
-      body: JSON.stringify(data)
+      body: JSON.stringify({task: data})
     })
 
-    if(!resp.ok) {
-      throw new Error("Failed to save task")
-    }
-
     const task = await resp.json();
+
+    if(!resp.ok) {
+      setError(task.error)
+      return;
+    }
     addTask(task);
+
+    await fetchProject(id);
     toggleAddTask(false)
   }
 
@@ -37,6 +40,7 @@ export default function AddTask({ toggleAddTask }) {
       <h3>Add Task</h3>
     </div>
     <div className="card-body">
+      { error && <div class="alert alert-danger">{error}</div> }
       <form onSubmit={handleSubmit}>
         <div className="form-group">
           <label>Name</label>
@@ -68,10 +72,23 @@ export default function AddTask({ toggleAddTask }) {
         </div>
         <div className="form-group">
           <label>Duration</label>
-          <input type="number"
-            name="duration"
-            className="form-control"
-          />
+          <div className="row">
+            <div className="col-6">
+              <input type="number"
+                name="duration"
+                className="form-control"
+              />
+            </div>
+            <div className="col-6">
+              <select name="duration_type" className="form-control">
+                <option value="hours">Hours</option>
+                <option value="day">Days</option>
+                <option value="weeks">Weeks</option>
+                <option value="month">Month</option>
+                <option value="years">Years</option>
+              </select>
+            </div>
+          </div>
         </div>
         <div className="mt-3">
           <button type="submit" className="btn btn-sm btn-primary">Submit</button>

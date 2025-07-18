@@ -5,7 +5,7 @@ import AddTask from "./AddTask"
 import { TaskContext } from "../../context/taskContext"
 
 
-export default function TasksList({ project, handleAddTask }) {
+export default function TasksList({ project,  }) {
   const [addTask, setAddTask] = useState(false);
   const { tasks } = useContext(TaskContext);
   return <>
@@ -18,7 +18,7 @@ export default function TasksList({ project, handleAddTask }) {
       { tasks.length == 0 && <p>No Tasks Assigned yet</p>}
       {
         tasks.map((task, index) => {
-          return <Task {...task} key={task.index} index={index} />
+          return <Task {...task} key={index} index={index} />
         })
       }
       {
